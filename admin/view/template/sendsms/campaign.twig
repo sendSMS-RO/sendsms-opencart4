@@ -1,0 +1,101 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-first-module" data-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fa fa-filter"></i></button>
+                <a href="{{ about_link }}" data-toggle="tooltip" title="{{ about_text }}" class="btn btn-light">{{ about_text }}</a>
+                <a href="{{ history_link }}" data-toggle="tooltip" title="{{ history_text }}" class="btn btn-light">{{ history_text }}</a>
+                <a href="{{ test_link }}" data-toggle="tooltip" title="{{ test_text }}" class="btn btn-light">{{ test_text }}</a>
+                <a href="{{ campaign_link }}" data-toggle="tooltip" title="{{ campaign_text }}" class="btn btn-light">{{ campaign_text }}</a>
+            </div>
+            <br />
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if success %}
+            <div class="alert alert-success">{{ success }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="card">
+            <div class="card-header"><i class="fa-solid fa-filter"></i> {{ heading_filter }}</div>
+            <div class="card-body">
+                <form action="{{ action }}" method="post" id="form-first-module">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="input-sendsms-phone">{{ campaign_date }}</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ campaign_start_date }}" id="input-date" class="form-control" />
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ campaign_end_date }}" id="input-date2" class="form-control" />
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="input-sendsms-sum">{{ campaign_sum }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="filter_sum" id="input-sendsms-sum" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="input-sendsms-product">{{ campaign_product }}</label>
+                        <div class="col-sm-10">
+                            <select name="filter_product" class="form-control" id="input-sendsms-product">
+                                <option value=""></option>
+                                {% for product in products %}
+                                    <option value="{{ product.product_id }}">{{ product.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="input-sendsms-county">{{ campaign_billing_county }}</label>
+                        <div class="col-sm-10">
+                            <select name="filter_county" class="form-control" id="input-sendsms-county">
+                                <option value=""></option>
+                                {% for county in counties %}
+                                    <option value="{{ county.payment_zone }}">{{ county.payment_zone }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#input-date, #input-date2').daterangepicker({
+            "showDropdowns": true,
+            "singleDatePicker": true,
+	        "timePicker": false,
+            "linkedCalendars": false,
+            "showCustomRangeLabel": false,
+            "autoApply": true,
+            "locale": {
+                "format": 'YYYY-MM-DD'
+            }
+        });
+</script>
+{{ footer }}

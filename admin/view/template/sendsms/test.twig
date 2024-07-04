@@ -1,0 +1,62 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-first-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+                <a href="{{ about_link }}" data-toggle="tooltip" title="{{ about_text }}" class="btn btn-light">{{ about_text }}</a>
+                <a href="{{ history_link }}" data-toggle="tooltip" title="{{ history_text }}" class="btn btn-light">{{ history_text }}</a>
+                <a href="{{ test_link }}" data-toggle="tooltip" title="{{ test_text }}" class="btn btn-light">{{ test_text }}</a>
+                <a href="{{ campaign_link }}" data-toggle="tooltip" title="{{ campaign_text }}" class="btn btn-light">{{ campaign_text }}</a>
+            </div>
+            <br />
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header"><i class="fa-solid fa-phone"></i> {{ heading_test }}</div>
+            <div class="card-body">
+                <form action="{{ save }}" method="post" id="form-first-module" data-oc-toggle="ajax">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="input-sendsms-phone">{{ entry_phone }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="module_sendsms_phone" id="input-sendsms-phone" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="input-sendsms-message">{{ entry_message }}</label>
+                        <div class="col-sm-10">
+                            <textarea name="module_sendsms_message" id="input-sendsms-message" rows="5" class="form-control sendsms_char_count"></textarea>
+                            <p>160 {{ entry_characters_left }}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var sendsms_char_count = document.getElementsByClassName('sendsms_char_count');
+    for (var i = 0; i < sendsms_char_count.length; i++) {
+        var sendsms_element = sendsms_char_count[i];
+        sendsms_element.onkeyup = function() {
+            var text_length = this.value.length;
+            var text_remaining = 160 - text_length;
+            sms_no = Math.ceil(text_length/160);
+            var color = (sms_no > 1) ? '#ff0000' : '#000';
+            this.nextElementSibling.innerHTML = '<span style="color: ' + color + ';">{{ entry_sms }}: ' + sms_no + '</span> / ' + text_length + ' {{ entry_characters }}';
+        };
+        var text_length = sendsms_element.value.length;
+        var text_remaining = 160 - text_length;
+        sms_no = Math.ceil(text_length/160);
+        var color = (sms_no > 1) ? '#ff0000' : '#000';
+        sendsms_element.nextElementSibling.innerHTML = '<span style="color: ' + color + ';">{{ entry_sms }}: ' + sms_no + '</span> / ' + text_length + ' {{ entry_characters }}';
+    }
+</script>
+{{ footer }}
